@@ -45,6 +45,25 @@
             margin-top: 20px;
             color: #777;
         }
+        input {
+            padding: 5px;
+            margin: 10px 0;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #gameResult, #chatResponse {
+            margin-top: 10px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -61,18 +80,64 @@
 
     <div class="content" id="home">
         <h2>About Me</h2>
-        <p>Hello! I'm Daniel Zhong (GitHub: oppoa1). This is my personal website at <a href="https://oppoal.is-a.dev">oppoal.is-a.dev</a>, where I share my projects and interests. I’m exploring web development and using this site as a portfolio.</p>
+        <p>Hello! I'm Daniel Zhong (GitHub: oppoa1). This is my personal website at <a href="https://oppoal.is-a.dev">oppoal.is-a.dev</a>, where I share my projects and interests.</p>
         
         <h3>What I Do</h3>
         <ul>
             <li>Learning web technologies like HTML, CSS, and JavaScript.</li>
-            <li>Using Cloudflare for secure and fast hosting.</li>
-            <li>Building simple projects to improve my skills.</li>
+            <li>Using Cloudflare for secure hosting.</li>
+            <li>Building interactive projects like games and AI demos.</li>
         </ul>
+
+        <h2>Guess the Number Game</h2>
+        <p>Try to guess a number between 1 and 100!</p>
+        <input type="number" id="guessInput" min="1" max="100" placeholder="Enter your guess">
+        <button onclick="checkGuess()">Submit Guess</button>
+        <p id="gameResult"></p>
+
+        <h2>Chat with a Simple AI</h2>
+        <p>Ask me something simple!</p>
+        <input type="text" id="chatInput" placeholder="Type your message">
+        <button onclick="chatWithAI()">Send</button>
+        <p id="chatResponse"></p>
     </div>
 
     <footer>
         <p>© 2025 Daniel Zhong. All rights reserved.</p>
     </footer>
+
+    <script>
+        // 猜数字游戏
+        const randomNumber = Math.floor(Math.random() * 100) + 1;
+        function checkGuess() {
+            const userGuess = parseInt(document.getElementById("guessInput").value);
+            const resultDisplay = document.getElementById("gameResult");
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                resultDisplay.textContent = "Please enter a valid number between 1 and 100!";
+            } else if (userGuess === randomNumber) {
+                resultDisplay.textContent = "Congratulations! You guessed it!";
+                resultDisplay.style.color = "green";
+            } else if (userGuess < randomNumber) {
+                resultDisplay.textContent = "Too low! Try again.";
+            } else {
+                resultDisplay.textContent = "Too high! Try again.";
+            }
+        }
+
+        // 简单 AI 聊天
+        function chatWithAI() {
+            const userInput = document.getElementById("chatInput").value.toLowerCase();
+            const responseDisplay = document.getElementById("chatResponse");
+            if (userInput.includes("hello") || userInput.includes("hi")) {
+                responseDisplay.textContent = "Hello! How can I assist you today?";
+            } else if (userInput.includes("game")) {
+                responseDisplay.textContent = "Try the Guess the Number game above!";
+            } else if (userInput.includes("ai")) {
+                responseDisplay.textContent = "I’m a simple AI built with JavaScript. Ask me something!";
+            } else {
+                responseDisplay.textContent = "Hmm, I’m not sure how to answer that. Try asking about games or AI!";
+            }
+        }
+    </script>
 </body>
 </html>
